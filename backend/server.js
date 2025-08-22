@@ -1,4 +1,3 @@
-// Main server file for CryptoKindOnly backend
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -42,10 +41,15 @@ app.use('/api/activity', activityRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/keys', apiKeyRoutes);
 
+// ✅ Root route to verify backend is running
+app.get('/', (req, res) => {
+  res.send('Backend API is live 🚀');
+});
+
 // Serve static files from the frontend in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend')));
-  
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
   });
